@@ -80,8 +80,24 @@ module.exports = function (grunt) {
                     ext:'.min.js'
                 }]
             }
+        },
+        jshint:{
+            options:{
+                jshintrc:'.jshintrc'
+            },
+            build:['<%= config.app %>/**/*.js']
+        },
+        watch:{
+            build:{
+                files:['<%= config.app%>/**/*.js'],
+                tasks:['jshint','uglify'],
+                options:{spawn:false}
+            }
         }
+
     });
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.registerTask('default',['uglify']);
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.registerTask('default',['jshint','uglify','watch']);
 };
